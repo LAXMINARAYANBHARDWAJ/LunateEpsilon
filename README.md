@@ -140,6 +140,4 @@ LunatedEpsilon/
 
 **Version:** v1.0.0
 
-**License:** [MIT License](https://www.google.com/search?q=LICENSE)
-
-*Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files...*
+**License:** [Unicense License](https://unlicense.org/)
