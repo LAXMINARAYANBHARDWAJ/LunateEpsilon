@@ -114,11 +114,14 @@ pip install customtkinter
 
 ``` 
 LunatedEpsilon/
-├── main.py
-├── converter.py
-├── LE4.ico
+├── .gitignore
+├── LE2.ico
+├── LICENSE
 ├── README.md
-└── venv/ (ignored)
+├── converter.py
+├── main.py
+├── requirements.txt
+└── version.txt
 
 ```
 
