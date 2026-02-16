@@ -141,6 +141,6 @@ LunatedEpsilon/
 
 ## License
 
-**Version:** v1.0.0
+**Latest Release Version:** v1.0.0
 
-**License:** [Unicense License](https://unlicense.org/)
+**License:** [Unicense license](https://unlicense.org/)
