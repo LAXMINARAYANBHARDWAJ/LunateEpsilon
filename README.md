@@ -87,7 +87,7 @@ pip install customtkinter
 1.  **Clone the repository:**
     
     ``` bash
-    git clone https://github.com/<your-username>/LunatedEpsilon.git
+    git clone https://github.com/SAMXRA1/LunatedEpsilon.git
     cd LunatedEpsilon
     
     ```
@@ -109,21 +109,6 @@ pip install customtkinter
     ```
     
     The compiled executable will be located in the `dist/` folder.
-
-## Project Structure
-
-``` 
-LunatedEpsilon/
-├── .gitignore
-├── LE2.ico
-├── LICENSE
-├── README.md
-├── converter.py
-├── main.py
-├── requirements.txt
-└── version.txt
-
-```
 
 ## Design Principles & Limitations
 
