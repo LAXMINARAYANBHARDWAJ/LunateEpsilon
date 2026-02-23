@@ -87,7 +87,7 @@ pip install customtkinter
 1.  **Clone the repository:**
     
     ``` bash
-    git clone https://github.com/SAMXRA1/LunatedEpsilon.git
+    git clone https://github.com/LAXMINARAYANBHARDWAJ/LunatedEpsilon.git
     cd LunatedEpsilon
     
     ```
