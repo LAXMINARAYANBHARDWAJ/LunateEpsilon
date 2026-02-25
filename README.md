@@ -1,4 +1,4 @@
-# LunatedEpsilon
+# LunatedEpsilon **ϵ**
 
 **LunatedEpsilon** is a minimal Windows utility for converting between `.m3u` and `.m3u8` playlist formats.
 
@@ -129,3 +129,5 @@ pip install customtkinter
 **Latest Release Version:** v1.0.0
 
 **License:** [Unicense license](https://unlicense.org/)
+
+Logo: Greek Lunate Epsilon UTF encoding "U+03F5"
