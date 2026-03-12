@@ -4,6 +4,7 @@
 #include "Converter.h"
 
 #include <QMainWindow>
+#include <QStatusBar>
 #include <QFutureWatcher>
 #include <QLabel>
 #include <QPushButton>
@@ -44,7 +45,11 @@ private:
     void setConversionInProgress(bool inProgress);
     void showError(const QString& message);
     void animateProgressTo(int targetPercent);
-    void applyWindowIcon();
+
+    // Selects LEwX.ico or LEbX.ico based on the active theme.
+    // LEwX: Dark (forced), AMOLED (forced), System when dark.
+    // LEbX: Light (forced), System when light.
+    void updateWindowIcon();
 
     // Main UI controls
     QPushButton*  m_selectBtn        = nullptr;
@@ -58,14 +63,16 @@ private:
     QPushButton*  m_browseCustomBtn  = nullptr;
     QPushButton*  m_convertBtn       = nullptr;
     QProgressBar* m_progressBar      = nullptr;
-    QLabel*       m_statusLabel      = nullptr;
     QComboBox*    m_themeBox         = nullptr;
+
+    // Owned by the QStatusBar — pointer kept for text updates.
+    QLabel*       m_statusLabel      = nullptr;
 
     // State
     QString      m_filePath;
     QString      m_inputExt;
 
-    // Conversion error transported from worker thread to UI thread
+    // Conversion error transported from worker thread to UI thread.
     std::optional<std::string> m_conversionError;
 
     ThemeManager          m_themeManager;

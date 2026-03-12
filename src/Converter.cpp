@@ -68,7 +68,7 @@ void Converter::convertM3uToM3u8(const ConversionParams& params)
         line = stripLeadingMusicPrefix(line);
         line = normalizePath(line);
 
-        const QString fullPath = base + '/' + line;
+        const QString fullPath = base + '\\' + line;
         out << fullPath << '\n';
     }
 
@@ -118,7 +118,7 @@ void Converter::convertM3u8ToM3u(const ConversionParams& params)
             out << originalPath << '\n';
         } else {
             const QString filename = QFileInfo(originalPath).fileName();
-            out << customBase << '/' << filename << '\n';
+            out << customBase << '\\' << filename << '\n';
         }
     }
 
@@ -127,16 +127,33 @@ void Converter::convertM3u8ToM3u(const ConversionParams& params)
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
+// Normalizes all slash variants (/, \, //, \\, mixed) to a single backslash.
+// Also strips any trailing separator.
 QString Converter::normalizePath(const QString& path)
 {
-    QString normalized = path;
-    normalized.replace('\\', '/');
+    QString result;
+    result.reserve(path.size());
 
-    while (normalized.endsWith('/')) {
-        normalized.chop(1);
+    bool lastWasSep = false;
+
+    for (const QChar ch : path) {
+        if (ch == '/' || ch == '\\') {
+            if (!lastWasSep) {
+                result.append('\\');
+            }
+            lastWasSep = true;
+        } else {
+            result.append(ch);
+            lastWasSep = false;
+        }
     }
 
-    return normalized;
+    // Strip trailing backslash
+    while (result.endsWith('\\')) {
+        result.chop(1);
+    }
+
+    return result;
 }
 
 QString Converter::stripLeadingMusicPrefix(const QString& line)

@@ -7,6 +7,7 @@
 #include <QTimer>
 #include <QFileInfo>
 #include <QIcon>
+#include <QStatusBar>
 #include <QtConcurrent/QtConcurrent>
 
 Q_LOGGING_CATEGORY(lcWindow, "le.window")
@@ -25,15 +26,34 @@ MainWindow::MainWindow(QWidget* parent)
     connectSignals();
 
     m_themeManager.applyTheme(Theme::System);
-    applyWindowIcon();
+    updateWindowIcon();
 
     qCInfo(lcWindow) << "MainWindow constructed";
 }
 
-void MainWindow::applyWindowIcon()
+void MainWindow::updateWindowIcon()
 {
-    const QIcon icon(":/icons/LEwX.ico");
-    setWindowIcon(icon);
+    // Forced dark themes always use the white icon.
+    // Forced light theme always uses the black icon.
+    // System theme follows the OS setting.
+    const Theme current = m_themeManager.currentTheme();
+
+    bool useDarkIcon = false;
+
+    switch (current) {
+        case Theme::Dark:
+        case Theme::AMOLED:
+            useDarkIcon = true;
+            break;
+        case Theme::Light:
+            useDarkIcon = false;
+            break;
+        case Theme::System:
+            useDarkIcon = ThemeManager::systemIsDark();
+            break;
+    }
+
+    setWindowIcon(QIcon(useDarkIcon ? ":/icons/LEwX.ico" : ":/icons/LEbX.ico"));
 }
 
 void MainWindow::buildUi()
@@ -46,25 +66,38 @@ void MainWindow::buildCentralContent()
     auto* central = new QWidget(this);
     central->setObjectName("centralWidget");
 
+    // ── Root layout: vertical, fills the central widget ─────────────────────
     auto* rootLayout = new QVBoxLayout(central);
     rootLayout->setContentsMargins(0, 0, 0, 0);
     rootLayout->setSpacing(0);
 
+    // ── Top bar: theme selector pinned to the right ──────────────────────────
+    auto* topBar = new QWidget(central);
+    auto* topBarLayout = new QHBoxLayout(topBar);
+    topBarLayout->setContentsMargins(8, 8, 12, 4);
+    topBarLayout->setSpacing(0);
+
+    m_themeBox = new QComboBox(topBar);
+    m_themeBox->addItems({"System", "Light", "Dark", "AMOLED"});
+    m_themeBox->setObjectName("themeBox");
+    // Fixed size prevents any geometry shift when stylesheets change across themes.
+    m_themeBox->setFixedSize(110, 28);
+
+    topBarLayout->addStretch();
+    topBarLayout->addWidget(m_themeBox);
+
+    // ── Content area: centred vertically and horizontally ───────────────────
     auto* contentWidget = new QWidget(central);
     auto* contentLayout = new QVBoxLayout(contentWidget);
     contentLayout->setAlignment(Qt::AlignCenter);
-    contentLayout->setSpacing(10);
-    contentLayout->setContentsMargins(40, 20, 40, 30);
-
-    m_themeBox = new QComboBox(contentWidget);
-    m_themeBox->addItems({"System", "Light", "Dark", "AMOLED"});
-    m_themeBox->setFixedHeight(24);
-    m_themeBox->setObjectName("themeBox");
+    contentLayout->setSpacing(12);
+    contentLayout->setContentsMargins(40, 0, 40, 20);
 
     // Select File
     m_selectBtn = new QPushButton("Select File", contentWidget);
     m_selectBtn->setObjectName("selectBtn");
     m_selectBtn->setFixedHeight(34);
+    m_selectBtn->setFixedWidth(160);
 
     m_fileLabel = new QLabel("No file selected", contentWidget);
     m_fileLabel->setObjectName("fileLabel");
@@ -72,6 +105,7 @@ void MainWindow::buildCentralContent()
 
     // Base path row (M3U → M3U8)
     m_basePathWidget = new QWidget(contentWidget);
+    m_basePathWidget->setFixedWidth(420);
     m_basePathEdit   = new QLineEdit(m_basePathWidget);
     m_basePathEdit->setPlaceholderText("Base folder path");
     m_browseBaseBtn  = new QPushButton("Browse", m_basePathWidget);
@@ -79,6 +113,7 @@ void MainWindow::buildCentralContent()
     {
         auto* row = new QHBoxLayout(m_basePathWidget);
         row->setContentsMargins(0, 0, 0, 0);
+        row->setSpacing(6);
         row->addWidget(m_basePathEdit);
         row->addWidget(m_browseBaseBtn);
     }
@@ -87,10 +122,12 @@ void MainWindow::buildCentralContent()
     // Location mode (M3U8 → M3U)
     m_locationModeBox = new QComboBox(contentWidget);
     m_locationModeBox->addItems({"Keep original path", "Use custom base path"});
+    m_locationModeBox->setFixedWidth(220);
     m_locationModeBox->setVisible(false);
 
     // Custom path row
     m_customPathWidget = new QWidget(contentWidget);
+    m_customPathWidget->setFixedWidth(420);
     m_customPathEdit   = new QLineEdit(m_customPathWidget);
     m_customPathEdit->setPlaceholderText("Custom base path");
     m_browseCustomBtn  = new QPushButton("Browse", m_customPathWidget);
@@ -98,6 +135,7 @@ void MainWindow::buildCentralContent()
     {
         auto* row = new QHBoxLayout(m_customPathWidget);
         row->setContentsMargins(0, 0, 0, 0);
+        row->setSpacing(6);
         row->addWidget(m_customPathEdit);
         row->addWidget(m_browseCustomBtn);
     }
@@ -107,6 +145,7 @@ void MainWindow::buildCentralContent()
     m_convertBtn = new QPushButton("Convert", contentWidget);
     m_convertBtn->setObjectName("convertBtn");
     m_convertBtn->setFixedHeight(36);
+    m_convertBtn->setFixedWidth(160);
     m_convertBtn->setEnabled(false);
 
     // Progress bar
@@ -114,26 +153,31 @@ void MainWindow::buildCentralContent()
     m_progressBar->setRange(0, 100);
     m_progressBar->setValue(0);
     m_progressBar->setFixedWidth(320);
+    m_progressBar->setFixedHeight(6);
     m_progressBar->setVisible(false);
     m_progressBar->setTextVisible(false);
 
-    // Status label
-    m_statusLabel = new QLabel(contentWidget);
-    m_statusLabel->setAlignment(Qt::AlignCenter);
-    m_statusLabel->setObjectName("statusLabel");
-    m_statusLabel->setVisible(false);
+    contentLayout->addWidget(m_selectBtn,        0, Qt::AlignCenter);
+    contentLayout->addWidget(m_fileLabel,         0, Qt::AlignCenter);
+    contentLayout->addWidget(m_basePathWidget,    0, Qt::AlignCenter);
+    contentLayout->addWidget(m_locationModeBox,   0, Qt::AlignCenter);
+    contentLayout->addWidget(m_customPathWidget,  0, Qt::AlignCenter);
+    contentLayout->addSpacing(4);
+    contentLayout->addWidget(m_convertBtn,        0, Qt::AlignCenter);
+    contentLayout->addSpacing(8);
+    contentLayout->addWidget(m_progressBar,       0, Qt::AlignCenter);
 
-    contentLayout->addWidget(m_themeBox,        0, Qt::AlignRight);
-    contentLayout->addWidget(m_selectBtn,       0, Qt::AlignCenter);
-    contentLayout->addWidget(m_fileLabel,       0, Qt::AlignCenter);
-    contentLayout->addWidget(m_basePathWidget,  0, Qt::AlignCenter);
-    contentLayout->addWidget(m_locationModeBox, 0, Qt::AlignCenter);
-    contentLayout->addWidget(m_customPathWidget, 0, Qt::AlignCenter);
-    contentLayout->addWidget(m_convertBtn,      0, Qt::AlignCenter);
-    contentLayout->addWidget(m_progressBar,     0, Qt::AlignCenter);
-    contentLayout->addWidget(m_statusLabel,     0, Qt::AlignCenter);
-
+    // ── Assemble root ────────────────────────────────────────────────────────
+    rootLayout->addWidget(topBar,        0);
     rootLayout->addWidget(contentWidget, 1);
+
+    // ── Status bar ───────────────────────────────────────────────────────────
+    m_statusLabel = new QLabel(this);
+    m_statusLabel->setObjectName("statusLabel");
+    m_statusLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    statusBar()->addWidget(m_statusLabel, 1);
+    statusBar()->setSizeGripEnabled(false);
+    statusBar()->setVisible(false);
 
     setCentralWidget(central);
 }
@@ -265,9 +309,9 @@ void MainWindow::onConversionFinished()
     }
 
     animateProgressTo(100);
-    m_statusLabel->setText("Completed");
+    m_statusLabel->setText("Completed successfully.");
 
-    QTimer::singleShot(900, this, [this]() {
+    QTimer::singleShot(1200, this, [this]() {
         setConversionInProgress(false);
     });
 }
@@ -292,6 +336,7 @@ void MainWindow::onThemeChanged(int index)
 {
     const Theme themes[] = {Theme::System, Theme::Light, Theme::Dark, Theme::AMOLED};
     m_themeManager.applyTheme(themes[index]);
+    updateWindowIcon();
 }
 
 void MainWindow::updateConvertButtonState()
@@ -317,14 +362,15 @@ void MainWindow::setConversionInProgress(bool inProgress)
 {
     m_convertBtn->setEnabled(!inProgress);
     m_progressBar->setVisible(inProgress);
-    m_statusLabel->setVisible(inProgress);
 
     if (inProgress) {
         m_progressBar->setValue(0);
-        m_statusLabel->setText("Processing…");
+        m_statusLabel->setText("Processing\u2026");
+        statusBar()->setVisible(true);
     } else {
         m_progressBar->setValue(0);
-        m_statusLabel->setVisible(false);
+        statusBar()->setVisible(false);
+        m_statusLabel->clear();
         updateConvertButtonState();
     }
 }

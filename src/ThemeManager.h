@@ -23,6 +23,10 @@ public:
     void applyTheme(Theme theme);
     [[nodiscard]] Theme currentTheme() const noexcept { return m_current; }
 
+    // Returns true if the Windows system color scheme is currently dark.
+    // Used by MainWindow to select the correct application icon.
+    [[nodiscard]] static bool systemIsDark();
+
 signals:
     void themeChanged(Theme theme);
 
