@@ -5,7 +5,7 @@ The application is built with **modern C++20** and **Qt 6 Widgets**, focusing on
 
 The project emphasizes **clean architecture, strict memory safety, and professional desktop UX**, while remaining lightweight and dependency-minimal.
 
-—————————————————————————————————————————————————————————
+————————————————————————————————————————————————————
 
 # Overview
 
@@ -15,7 +15,7 @@ The application processes playlists and produces corrected output with **strict 
 
 The program is designed to handle **large playlist files without freezing the UI**, ensuring a smooth experience even during heavy operations.
 
-—————————————————————————————————————————————————————————
+————————————————————————————————————————————————————
 
 # Key Features
 
@@ -30,7 +30,7 @@ Built using the **MSVC 2026 toolchain** with modern C++ idioms including:
 
 The codebase prioritizes maintainability and predictable runtime behavior.
 
-—————————————————————————————————————————————————————————
+————————————————————————————————————————————————————
 
 ## Qt 6 Native Desktop UI
 
@@ -43,7 +43,7 @@ The interface uses **Qt 6 Widgets**, providing:
 
 The UI is intentionally minimal and functional.
 
-—————————————————————————————————————————————————————————
+————————————————————————————————————————————————————
 
 ## Asynchronous Processing
 
@@ -55,7 +55,7 @@ Benefits:
 * Safe cross-thread communication using Qt signals
 * Deterministic processing pipeline
 
-—————————————————————————————————————————————————————————
+————————————————————————————————————————————————————
 
 ## Strict Windows Path Normalization
 
@@ -73,7 +73,7 @@ Music\Album\Track.mp3
 
 This ensures compatibility with Windows media players and file systems.
 
-—————————————————————————————————————————————————————————
+————————————————————————————————————————————————————
 
 ## Dynamic Theme System
 
@@ -87,7 +87,7 @@ The UI avoids layout shifting by anchoring the theme toggle to the **top-right c
 
 Application icons automatically change based on the active theme.
 
-—————————————————————————————————————————————————————————
+————————————————————————————————————————————————————
 
 # Architecture
 
@@ -109,7 +109,7 @@ Business Logic
 * UI updates only through Qt signals/slots
 * Deterministic state transitions
 
-—————————————————————————————————————————————————————————
+————————————————————————————————————————————————————
 
 # Technical Specifications
 
@@ -142,7 +142,7 @@ Full UTF-8 support using `QTextStream` for international file paths.
 
 Strict RAII with modern smart pointer usage.
 
-—————————————————————————————————————————————————————————
+————————————————————————————————————————————————————
 
 # Installation
 
@@ -161,7 +161,7 @@ LunateEpsilon-setup-2.0.0-windows-x64.exe
 
 No additional configuration is required.
 
-—————————————————————————————————————————————————————————
+————————————————————————————————————————————————————
 
 # Building From Source
 
@@ -196,7 +196,7 @@ The compiled binary will appear in:
 build/Release
 ```
 
-—————————————————————————————————————————————————————————
+————————————————————————————————————————————————————
 
 # Project Goals
 
@@ -208,7 +208,7 @@ LunateEpsilon is built around several long-term goals:
 * Native Windows experience
 * Maintainable and extensible codebase
 
-—————————————————————————————————————————————————————————
+————————————————————————————————————————————————————
 
 # License
 
@@ -218,4 +218,4 @@ You are free to use, modify, distribute, and integrate the software without rest
 
 See the LICENSE file for details.
 
-—————————————————————————————————————————————————————————
+————————————————————————————————————————————————————
