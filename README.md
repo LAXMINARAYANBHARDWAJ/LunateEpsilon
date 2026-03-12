@@ -185,15 +185,15 @@ cmake -S . -B build -G Ninja -DCMAKE_PREFIX_PATH="C:/Qt/6.10.2/msvc2022_64" -DCM
 cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
 cmake --build build --config Release
 
-& "C:\Qt\6.10.2\msvc2022_64\bin\windeployqt.exe" --no-translations --compiler-runtime release\LunateEpsilon.exe
+& "C:\Qt\6.10.2\msvc2022_64\bin\windeployqt.exe" --no-translations --compiler-runtime release\LunateEpsilon.exe # Go into build directory first
 
-& "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer.iss
+& "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer.iss # Go into build directory first
 ```
 
 The compiled binary will appear in:
 
 ```
-build/Release
+build/release
 ```
 
 ————————————————————————————————————————————————————
