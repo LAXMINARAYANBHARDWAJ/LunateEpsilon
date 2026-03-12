@@ -5,6 +5,19 @@ project(LunateEpsilon
     LANGUAGES CXX
 )
 
+# Enforce specific MSVC Toolset v145 and Compiler Version
+if(MSVC)
+    # Check for Toolset 145
+    if(NOT MSVC_TOOLSET_VERSION EQUAL 145)
+        message(FATAL_ERROR "LunateEpsilon requires MSVC Toolset v145. Current: ${MSVC_TOOLSET_VERSION}")
+    endif()
+
+    # Check for exact Compiler Version reported: 19.50.35725
+    if(NOT CMAKE_CXX_COMPILER_VERSION VERSION_EQUAL "19.50.35725")
+        message(FATAL_ERROR "Compiler version mismatch. Expected 19.50.35725, found ${CMAKE_CXX_COMPILER_VERSION}")
+    endif()
+endif()
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
