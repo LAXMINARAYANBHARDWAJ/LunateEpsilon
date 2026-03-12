@@ -23,7 +23,7 @@ void ThemeManager::applyTheme(Theme theme)
 
     if (theme == Theme::System) {
         QApplication::setPalette(QApplication::style()->standardPalette());
-        QApplication::instance()->setStyleSheet(buildStyleSheet(Theme::System));
+        qApp->setStyleSheet(buildStyleSheet(Theme::System));
     } else {
         QPalette palette;
 
@@ -35,7 +35,7 @@ void ThemeManager::applyTheme(Theme theme)
         }
 
         QApplication::setPalette(palette);
-        QApplication::instance()->setStyleSheet(buildStyleSheet(theme));
+        qApp->setStyleSheet(buildStyleSheet(theme));
     }
 
     emit themeChanged(theme);
@@ -47,73 +47,70 @@ void ThemeManager::applyTheme(Theme theme)
 QPalette ThemeManager::buildLightPalette() const
 {
     QPalette p;
-    p.setColor(QPalette::Window,          QColor(0xF3F3F3));
-    p.setColor(QPalette::WindowText,      QColor(0x1A1A1A));
-    p.setColor(QPalette::Base,            QColor(0xFFFFFF));
-    p.setColor(QPalette::AlternateBase,   QColor(0xEAEAEA));
-    p.setColor(QPalette::Text,            QColor(0x1A1A1A));
-    p.setColor(QPalette::Button,          QColor(0xE0E0E0));
-    p.setColor(QPalette::ButtonText,      QColor(0x1A1A1A));
-    p.setColor(QPalette::Highlight,       QColor(0x0067C0));
-    p.setColor(QPalette::HighlightedText, QColor(0xFFFFFF));
-    p.setColor(QPalette::PlaceholderText, QColor(0x888888));
-    p.setColor(QPalette::ToolTipBase,     QColor(0xFFFFE1));
-    p.setColor(QPalette::ToolTipText,     QColor(0x000000));
+    p.setColor(QPalette::Window,          QColor(QRgb(0xF3F3F3)));
+    p.setColor(QPalette::WindowText,      QColor(QRgb(0x1A1A1A)));
+    p.setColor(QPalette::Base,            QColor(QRgb(0xFFFFFF)));
+    p.setColor(QPalette::AlternateBase,   QColor(QRgb(0xEAEAEA)));
+    p.setColor(QPalette::Text,            QColor(QRgb(0x1A1A1A)));
+    p.setColor(QPalette::Button,          QColor(QRgb(0xE0E0E0)));
+    p.setColor(QPalette::ButtonText,      QColor(QRgb(0x1A1A1A)));
+    p.setColor(QPalette::Highlight,       QColor(QRgb(0x0067C0)));
+    p.setColor(QPalette::HighlightedText, QColor(QRgb(0xFFFFFF)));
+    p.setColor(QPalette::PlaceholderText, QColor(QRgb(0x888888)));
+    p.setColor(QPalette::ToolTipBase,     QColor(QRgb(0xFFFFE1)));
+    p.setColor(QPalette::ToolTipText,     QColor(QRgb(0x000000)));
     return p;
 }
 
 QPalette ThemeManager::buildDarkPalette() const
 {
     QPalette p;
-    p.setColor(QPalette::Window,          QColor(0x1E1E1E));
-    p.setColor(QPalette::WindowText,      QColor(0xDCDCDC));
-    p.setColor(QPalette::Base,            QColor(0x252526));
-    p.setColor(QPalette::AlternateBase,   QColor(0x2D2D30));
-    p.setColor(QPalette::Text,            QColor(0xDCDCDC));
-    p.setColor(QPalette::Button,          QColor(0x3C3C3C));
-    p.setColor(QPalette::ButtonText,      QColor(0xDCDCDC));
-    p.setColor(QPalette::Highlight,       QColor(0x0078D4));
-    p.setColor(QPalette::HighlightedText, QColor(0xFFFFFF));
-    p.setColor(QPalette::PlaceholderText, QColor(0x555555));
-    p.setColor(QPalette::ToolTipBase,     QColor(0x2D2D30));
-    p.setColor(QPalette::ToolTipText,     QColor(0xDCDCDC));
+    p.setColor(QPalette::Window,          QColor(QRgb(0x1E1E1E)));
+    p.setColor(QPalette::WindowText,      QColor(QRgb(0xDCDCDC)));
+    p.setColor(QPalette::Base,            QColor(QRgb(0x252526)));
+    p.setColor(QPalette::AlternateBase,   QColor(QRgb(0x2D2D30)));
+    p.setColor(QPalette::Text,            QColor(QRgb(0xDCDCDC)));
+    p.setColor(QPalette::Button,          QColor(QRgb(0x3C3C3C)));
+    p.setColor(QPalette::ButtonText,      QColor(QRgb(0xDCDCDC)));
+    p.setColor(QPalette::Highlight,       QColor(QRgb(0x0078D4)));
+    p.setColor(QPalette::HighlightedText, QColor(QRgb(0xFFFFFF)));
+    p.setColor(QPalette::PlaceholderText, QColor(QRgb(0x555555)));
+    p.setColor(QPalette::ToolTipBase,     QColor(QRgb(0x2D2D30)));
+    p.setColor(QPalette::ToolTipText,     QColor(QRgb(0xDCDCDC)));
     return p;
 }
 
 QPalette ThemeManager::buildAmoledPalette() const
 {
     QPalette p;
-    p.setColor(QPalette::Window,          QColor(0x000000));
-    p.setColor(QPalette::WindowText,      QColor(0xE0E0E0));
-    p.setColor(QPalette::Base,            QColor(0x0A0A0A));
-    p.setColor(QPalette::AlternateBase,   QColor(0x111111));
-    p.setColor(QPalette::Text,            QColor(0xE0E0E0));
-    p.setColor(QPalette::Button,          QColor(0x1A1A1A));
-    p.setColor(QPalette::ButtonText,      QColor(0xE0E0E0));
-    p.setColor(QPalette::Highlight,       QColor(0x0078D4));
-    p.setColor(QPalette::HighlightedText, QColor(0xFFFFFF));
-    p.setColor(QPalette::PlaceholderText, QColor(0x3A3A3A));
-    p.setColor(QPalette::ToolTipBase,     QColor(0x0A0A0A));
-    p.setColor(QPalette::ToolTipText,     QColor(0xE0E0E0));
+    p.setColor(QPalette::Window,          QColor(QRgb(0x000000)));
+    p.setColor(QPalette::WindowText,      QColor(QRgb(0xE0E0E0)));
+    p.setColor(QPalette::Base,            QColor(QRgb(0x0A0A0A)));
+    p.setColor(QPalette::AlternateBase,   QColor(QRgb(0x111111)));
+    p.setColor(QPalette::Text,            QColor(QRgb(0xE0E0E0)));
+    p.setColor(QPalette::Button,          QColor(QRgb(0x1A1A1A)));
+    p.setColor(QPalette::ButtonText,      QColor(QRgb(0xE0E0E0)));
+    p.setColor(QPalette::Highlight,       QColor(QRgb(0x0078D4)));
+    p.setColor(QPalette::HighlightedText, QColor(QRgb(0xFFFFFF)));
+    p.setColor(QPalette::PlaceholderText, QColor(QRgb(0x3A3A3A)));
+    p.setColor(QPalette::ToolTipBase,     QColor(QRgb(0x0A0A0A)));
+    p.setColor(QPalette::ToolTipText,     QColor(QRgb(0xE0E0E0)));
     return p;
 }
 
 // ─── Stylesheet ──────────────────────────────────────────────────────────────
 //
 // Structure: each theme block defines rules for the following components in order:
-//   1. Title bar (#titleBar) and its label
-//   2. Title bar control buttons — normal, hover, pressed, close variants
-//   3. Theme selector combobox (#themeBox) in the title bar
-//   4. Central widget background (#centralWidget)
-//   5. Select and Convert buttons (#selectBtn, #convertBtn)
-//   6. Browse buttons (generic QPushButton inside path widgets)
-//   7. QLineEdit (path input fields)
-//   8. QComboBox (location mode selector)
-//   9. QProgressBar
-//  10. Status / file labels (#statusLabel, #fileLabel)
-//  11. QScrollBar
-//  12. QToolTip
-//  13. QMenu (context menu)
+//   1. Central widget background (#centralWidget)
+//   2. Select and Convert buttons (#selectBtn, #convertBtn)
+//   3. Browse buttons (generic QPushButton inside path widgets)
+//   4. QLineEdit (path input fields)
+//   5. QComboBox (location mode selector)
+//   6. QProgressBar
+//   7. Status / file labels (#statusLabel, #fileLabel)
+//   8. QScrollBar
+//   9. QToolTip
+//  10. QMenu (context menu)
 //
 // QPalette covers base colours; this stylesheet handles geometry, radius,
 // border, hover/pressed transitions, and elements QPalette cannot express.
@@ -123,59 +120,9 @@ QString ThemeManager::buildStyleSheet(Theme theme) const
     switch (theme) {
 
     // ── System ───────────────────────────────────────────────────────────────
-    // Minimal overrides — let the platform style lead. Only fix geometry and
-    // the title bar, which has no native equivalent regardless of theme.
+    // Minimal overrides — let the platform style lead.
     case Theme::System:
         return QStringLiteral(
-            /* Title bar */
-            "QWidget#titleBar {"
-            "  background-color: palette(window);"
-            "  border-bottom: 1px solid palette(mid);"
-            "}"
-            "QLabel#titleLabel {"
-            "  color: palette(window-text);"
-            "  font-size: 13px;"
-            "  font-weight: 600;"
-            "  padding-left: 2px;"
-            "}"
-
-            /* Title bar buttons */
-            "QPushButton#titleBarBtn {"
-            "  background: transparent;"
-            "  border: none;"
-            "  color: palette(window-text);"
-            "  font-size: 13px;"
-            "}"
-            "QPushButton#titleBarBtn:hover {"
-            "  background-color: palette(mid);"
-            "}"
-            "QPushButton#titleBarBtn:pressed {"
-            "  background-color: palette(dark);"
-            "}"
-            "QPushButton#titleBarCloseBtn {"
-            "  background: transparent;"
-            "  border: none;"
-            "  color: palette(window-text);"
-            "  font-size: 13px;"
-            "}"
-            "QPushButton#titleBarCloseBtn:hover {"
-            "  background-color: #C42B1C;"
-            "  color: #FFFFFF;"
-            "}"
-            "QPushButton#titleBarCloseBtn:pressed {"
-            "  background-color: #A12315;"
-            "  color: #FFFFFF;"
-            "}"
-
-            /* Theme selector */
-            "QComboBox#themeBox {"
-            "  border: 1px solid palette(mid);"
-            "  border-radius: 4px;"
-            "  padding: 0 8px;"
-            "  font-size: 12px;"
-            "  min-width: 80px;"
-            "}"
-
             /* Main buttons */
             "QPushButton#selectBtn, QPushButton#convertBtn {"
             "  border-radius: 4px;"
@@ -219,64 +166,6 @@ QString ThemeManager::buildStyleSheet(Theme theme) const
     // ── Light ─────────────────────────────────────────────────────────────────
     case Theme::Light:
         return QStringLiteral(
-            /* Title bar */
-            "QWidget#titleBar {"
-            "  background-color: #F0F0F0;"
-            "  border-bottom: 1px solid #D0D0D0;"
-            "}"
-            "QLabel#titleLabel {"
-            "  color: #1A1A1A;"
-            "  font-size: 13px;"
-            "  font-weight: 600;"
-            "  padding-left: 2px;"
-            "}"
-
-            /* Title bar buttons */
-            "QPushButton#titleBarBtn {"
-            "  background: transparent;"
-            "  border: none;"
-            "  color: #1A1A1A;"
-            "  font-size: 13px;"
-            "}"
-            "QPushButton#titleBarBtn:hover {"
-            "  background-color: #DADADA;"
-            "}"
-            "QPushButton#titleBarBtn:pressed {"
-            "  background-color: #C8C8C8;"
-            "}"
-            "QPushButton#titleBarCloseBtn {"
-            "  background: transparent;"
-            "  border: none;"
-            "  color: #1A1A1A;"
-            "  font-size: 13px;"
-            "}"
-            "QPushButton#titleBarCloseBtn:hover {"
-            "  background-color: #C42B1C;"
-            "  color: #FFFFFF;"
-            "}"
-            "QPushButton#titleBarCloseBtn:pressed {"
-            "  background-color: #A12315;"
-            "  color: #FFFFFF;"
-            "}"
-
-            /* Theme selector */
-            "QComboBox#themeBox {"
-            "  background-color: #FFFFFF;"
-            "  border: 1px solid #C0C0C0;"
-            "  border-radius: 4px;"
-            "  padding: 0 8px;"
-            "  font-size: 12px;"
-            "  color: #1A1A1A;"
-            "  min-width: 80px;"
-            "}"
-            "QComboBox#themeBox::drop-down { border: none; width: 20px; }"
-            "QComboBox#themeBox QAbstractItemView {"
-            "  background-color: #FFFFFF;"
-            "  border: 1px solid #C0C0C0;"
-            "  selection-background-color: #0067C0;"
-            "  selection-color: #FFFFFF;"
-            "}"
-
             /* Central widget */
             "QWidget#centralWidget { background-color: #F3F3F3; }"
 
@@ -419,64 +308,6 @@ QString ThemeManager::buildStyleSheet(Theme theme) const
     // ── Dark ──────────────────────────────────────────────────────────────────
     case Theme::Dark:
         return QStringLiteral(
-            /* Title bar */
-            "QWidget#titleBar {"
-            "  background-color: #2D2D2D;"
-            "  border-bottom: 1px solid #3A3A3A;"
-            "}"
-            "QLabel#titleLabel {"
-            "  color: #DCDCDC;"
-            "  font-size: 13px;"
-            "  font-weight: 600;"
-            "  padding-left: 2px;"
-            "}"
-
-            /* Title bar buttons */
-            "QPushButton#titleBarBtn {"
-            "  background: transparent;"
-            "  border: none;"
-            "  color: #DCDCDC;"
-            "  font-size: 13px;"
-            "}"
-            "QPushButton#titleBarBtn:hover {"
-            "  background-color: #404040;"
-            "}"
-            "QPushButton#titleBarBtn:pressed {"
-            "  background-color: #505050;"
-            "}"
-            "QPushButton#titleBarCloseBtn {"
-            "  background: transparent;"
-            "  border: none;"
-            "  color: #DCDCDC;"
-            "  font-size: 13px;"
-            "}"
-            "QPushButton#titleBarCloseBtn:hover {"
-            "  background-color: #C42B1C;"
-            "  color: #FFFFFF;"
-            "}"
-            "QPushButton#titleBarCloseBtn:pressed {"
-            "  background-color: #A12315;"
-            "  color: #FFFFFF;"
-            "}"
-
-            /* Theme selector */
-            "QComboBox#themeBox {"
-            "  background-color: #3C3C3C;"
-            "  border: 1px solid #555555;"
-            "  border-radius: 4px;"
-            "  padding: 0 8px;"
-            "  font-size: 12px;"
-            "  color: #DCDCDC;"
-            "  min-width: 80px;"
-            "}"
-            "QComboBox#themeBox::drop-down { border: none; width: 20px; }"
-            "QComboBox#themeBox QAbstractItemView {"
-            "  background-color: #3C3C3C;"
-            "  border: 1px solid #555555;"
-            "  selection-background-color: #0078D4;"
-            "  selection-color: #FFFFFF;"
-            "}"
-
             /* Central widget */
             "QWidget#centralWidget { background-color: #1E1E1E; }"
 
@@ -619,64 +450,6 @@ QString ThemeManager::buildStyleSheet(Theme theme) const
     // ── AMOLED ────────────────────────────────────────────────────────────────
     case Theme::AMOLED:
         return QStringLiteral(
-            /* Title bar */
-            "QWidget#titleBar {"
-            "  background-color: #000000;"
-            "  border-bottom: 1px solid #1C1C1C;"
-            "}"
-            "QLabel#titleLabel {"
-            "  color: #E0E0E0;"
-            "  font-size: 13px;"
-            "  font-weight: 600;"
-            "  padding-left: 2px;"
-            "}"
-
-            /* Title bar buttons */
-            "QPushButton#titleBarBtn {"
-            "  background: transparent;"
-            "  border: none;"
-            "  color: #E0E0E0;"
-            "  font-size: 13px;"
-            "}"
-            "QPushButton#titleBarBtn:hover {"
-            "  background-color: #1A1A1A;"
-            "}"
-            "QPushButton#titleBarBtn:pressed {"
-            "  background-color: #262626;"
-            "}"
-            "QPushButton#titleBarCloseBtn {"
-            "  background: transparent;"
-            "  border: none;"
-            "  color: #E0E0E0;"
-            "  font-size: 13px;"
-            "}"
-            "QPushButton#titleBarCloseBtn:hover {"
-            "  background-color: #C42B1C;"
-            "  color: #FFFFFF;"
-            "}"
-            "QPushButton#titleBarCloseBtn:pressed {"
-            "  background-color: #A12315;"
-            "  color: #FFFFFF;"
-            "}"
-
-            /* Theme selector */
-            "QComboBox#themeBox {"
-            "  background-color: #0A0A0A;"
-            "  border: 1px solid #2A2A2A;"
-            "  border-radius: 4px;"
-            "  padding: 0 8px;"
-            "  font-size: 12px;"
-            "  color: #E0E0E0;"
-            "  min-width: 80px;"
-            "}"
-            "QComboBox#themeBox::drop-down { border: none; width: 20px; }"
-            "QComboBox#themeBox QAbstractItemView {"
-            "  background-color: #0A0A0A;"
-            "  border: 1px solid #2A2A2A;"
-            "  selection-background-color: #0078D4;"
-            "  selection-color: #FFFFFF;"
-            "}"
-
             /* Central widget */
             "QWidget#centralWidget { background-color: #000000; }"
 
