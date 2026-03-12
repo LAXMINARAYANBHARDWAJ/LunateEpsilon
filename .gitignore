@@ -38,6 +38,7 @@
 *.app
 *.ninja
 build/
+dist/
 
 # debug information files
 *.dwo
